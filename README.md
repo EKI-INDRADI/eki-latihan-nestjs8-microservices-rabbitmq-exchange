@@ -74,6 +74,9 @@ Nest is [MIT licensed](LICENSE).
 
 
 
+## SERVICE :
+
+
 <details>
   <summary>[click] USER SERVICE</summary>
 
@@ -88,3 +91,45 @@ Nest is [MIT licensed](LICENSE).
 [INPROGRESS]
 
 </details>
+
+
+ 
+## REFERENSI :
+
+```bash
+https://nestjs.com/
+
+https://docs.nestjs.com/techniques/database
+
+https://docs.nestjs.com/techniques/mongodb
+
+https://tkssharma.com/nestjs-with-typeORM-mongoose-and-mysql-for-api-development/
+
+https://stackoverflow.com/questions/53646042/how-to-inject-model-if-the-model-is-in-the-root-module-only
+
+https://dev.to/carlomigueldy/building-a-restful-api-with-nestjs-and-mongodb-mongoose-2165
+
+https://stackoverflow.com/questions/60062318/how-to-inject-service-to-validator-constraint-interface-in-nestjs-using-class-va
+
+https://mongoosejs.com/docs/api.html#Connection
+
+
+https://github.com/EKI-INDRADI/eki-latihan-vm-alpine-docker-portable
+
+https://github.com/EKI-INDRADI/eki-latihan-docker-phpmyadmin-mariadb
+https://github.com/EKI-INDRADI/eki-latihan-nestjs-mysql
+https://github.com/EKI-INDRADI/eki-latihan-nestjs-fastify-mysql
+
+https://github.com/EKI-INDRADI/eki-latihan-docker-postgresql
+https://github.com/EKI-INDRADI/eki-latihan-nestjs-postgresql
+https://github.com/EKI-INDRADI/eki-latihan-nestjs-fastify-postgresql 
+
+https://github.com/EKI-INDRADI/eki-latihan-docker-mongodb
+https://github.com/EKI-INDRADI/eki-latihan-nestjs-mongodb
+https://github.com/EKI-INDRADI/eki-latihan-nestjs-fastify-mongodb
+
+```
+
+## EKI INDRADI
+
+"TIME > KNOWLEDGE > MONEY". #STILL_ONE_DIGIT
