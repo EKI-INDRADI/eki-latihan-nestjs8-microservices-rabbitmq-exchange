@@ -94,25 +94,13 @@ Nest is [MIT licensed](LICENSE).
 
 
  
-## REFERENSI :
+## REFERENCE :
 
 ```bash
-https://nestjs.com/
 
-https://docs.nestjs.com/techniques/database
+https://www.npmjs.com/package/@golevelup/nestjs-rabbitmq
 
-https://docs.nestjs.com/techniques/mongodb
-
-https://tkssharma.com/nestjs-with-typeORM-mongoose-and-mysql-for-api-development/
-
-https://stackoverflow.com/questions/53646042/how-to-inject-model-if-the-model-is-in-the-root-module-only
-
-https://dev.to/carlomigueldy/building-a-restful-api-with-nestjs-and-mongodb-mongoose-2165
-
-https://stackoverflow.com/questions/60062318/how-to-inject-service-to-validator-constraint-interface-in-nestjs-using-class-va
-
-https://mongoosejs.com/docs/api.html#Connection
-
+https://github.com/adehikmatfr/nestjs-rabbitmq-example
 
 https://github.com/EKI-INDRADI/eki-latihan-vm-alpine-docker-portable
 
@@ -127,6 +115,32 @@ https://github.com/EKI-INDRADI/eki-latihan-nestjs-fastify-postgresql
 https://github.com/EKI-INDRADI/eki-latihan-docker-mongodb
 https://github.com/EKI-INDRADI/eki-latihan-nestjs-mongodb
 https://github.com/EKI-INDRADI/eki-latihan-nestjs-fastify-mongodb
+
+https://github.com/EKI-INDRADI/eki-latihan-nestjs-sqlite-portable-file-upload
+
+https://github.com/EKI-INDRADI/eki-latihan-nestjs-http-module-rxjs-8
+
+https://github.com/EKI-INDRADI/eki-latihan-docker-rabbitmq
+https://github.com/EKI-INDRADI/eki-latihan-nestjs-rabbitmq
+https://github.com/EKI-INDRADI/eki-latihan-nestjs8-rabbitmq-exchange-promise-handle
+
+
+-- CUSTOM TOKEN HEADER
+
+https://stackoverflow.com/questions/54802832/is-it-possible-to-add-authentication-to-access-to-nestjs-swagger-explorer
+
+https://swagger.io/docs/specification/authentication/
+
+https://docs.nestjs.com/security/authentication
+
+https://docs.nestjs.com/openapi/operations
+
+https://stackoverflow.com/questions/50317738/fromauthheaderasbearertoken-is-not-working-in-node
+
+-- /CUSTOM TOKEN HEADER
+
+https://stackoverflow.com/questions/51692886/nest-cant-resolve-dependencies-of-the-userservice-please-make-sure-that
+
 
 ```
 

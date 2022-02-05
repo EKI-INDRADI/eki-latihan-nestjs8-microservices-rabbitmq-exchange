@@ -198,10 +198,8 @@ NOTE : MASIH RAPIHIN DESIGN PATTERN
 
 ## ==== /USER SERVICE
 
-
-
-
-# referensi
+ 
+## REFERENCE :
 
 ```bash
 
@@ -246,10 +244,11 @@ https://stackoverflow.com/questions/50317738/fromauthheaderasbearertoken-is-not-
 
 -- /CUSTOM TOKEN HEADER
 
-
-
 https://stackoverflow.com/questions/51692886/nest-cant-resolve-dependencies-of-the-userservice-please-make-sure-that
 
 
-
 ```
+
+## EKI INDRADI
+
+"TIME > KNOWLEDGE > MONEY". #STILL_ONE_DIGIT
