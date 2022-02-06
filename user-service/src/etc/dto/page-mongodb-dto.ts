@@ -2,7 +2,7 @@ import { ApiHideProperty, ApiProperty } from "@nestjs/swagger";
 import { IsNumber, IsObject, IsOptional, Max } from "class-validator";
 
 
-export class PageRequestDto {
+export class PageMongodbRequestDto {
     @ApiProperty({ description: 'optional - bisa pake page (recomended) atau bisa menggunakan skip (auto handle)', required: false, default: '1 (number) , jangan gunakan page ketika menggunakan skip' })
     @IsNumber()
     @IsOptional()
@@ -36,7 +36,7 @@ export class PageRequestDto {
     projection: object
 }
 
-export class PageResponseDto {
+export class PageMongodbResponseDto {
     @ApiProperty()
     @IsNumber()
     total: number

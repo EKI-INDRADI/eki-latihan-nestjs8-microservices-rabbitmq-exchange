@@ -30,7 +30,7 @@ export class UniqueValidator implements ValidatorConstraintInterface {
     }
 
     defaultMessage(args: ValidationArguments) {
-        return args.property + ' ' + args.value + ' sudah digunakan'
+        return args.property + ' ' + args.value + ' already exists'
     }
 
 }

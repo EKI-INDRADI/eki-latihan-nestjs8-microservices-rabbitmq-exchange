@@ -8,9 +8,9 @@ import { ExistValidator } from './etc/validator/exist-validator';
 import { UniqueValidator } from './etc/validator/unique-validator';
 import { AuthModule } from './auth/auth.module';
 import { MongooseModule } from '@nestjs/mongoose';
-import { createConnection } from 'mongoose';
-import { ToolsModule } from './tools/tools.module';
-import { ToolsService } from './tools/tools.service';
+// import { createConnection } from 'mongoose';
+import { ToolsService } from './etc/service/tools/tools.service';
+import { PageMongodbService } from './etc/service/page-mongodb/page-mongodb.service';
 
 
 @Module({
@@ -22,11 +22,10 @@ import { ToolsService } from './tools/tools.service';
       { name: User.name, schema: UserSchema }
     ]),
     UserModule,
-    AuthModule,
-    ToolsModule
+    AuthModule
   ],
   controllers: [AppController],
-  providers: [AppService, ExistValidator, UniqueValidator
+  providers: [AppService, ExistValidator, UniqueValidator, ToolsService, PageMongodbService
   
     // ,{
     //   provide: 'ASYNC_CONNECTION', 

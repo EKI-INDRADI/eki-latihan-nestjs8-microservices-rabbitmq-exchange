@@ -164,11 +164,11 @@ buat file pada src/auth/jwt.strategy.ts
 
 ```bash
 
-update user-service\src\main.ts -> 'eki-custom-token'
-update user-service\src\auth\auth.controller.ts -> 'eki-custom-token'
-update user-service\src\auth\jwt.strategy.ts -> 'eki-custom-token'
-update user-service\src\user\user.controller.ts  -> 'eki-custom-token'
-update user-service\src\auth\auth.controller.ts -> 'eki-custom-token'
+update user-service\src\main.ts -> 'eki-custom-auth-header'
+update user-service\src\auth\auth.controller.ts -> 'eki-custom-auth-header'
+update user-service\src\auth\jwt.strategy.ts -> 'eki-custom-auth-header'
+update user-service\src\user\user.controller.ts  -> 'eki-custom-auth-header'
+update user-service\src\auth\auth.controller.ts -> 'eki-custom-auth-header'
 
 ```
 
@@ -182,16 +182,21 @@ update user-service\src\auth\auth.controller.ts -> 'eki-custom-token'
 update user-service\src\auth\jwt.strategy.ts
 update user-service\src\user\user.controller.ts
 
-nest g res tools
+nest g service /etc/service/tools
 
-update user-service\src\tools\tools.service.ts (objectSortAlphabetical)
-update user-service\src\tools\tools.module.ts (objectSortAlphabetical)
+update user-service\etc\service\tools.service.ts (objectSortAlphabetical)
 update user-service\src\user\user.module.ts (objectSortAlphabetical)
 
-update user-service\src\user\user.controller.ts
-update user-service\src\user\user.service.ts
+update user-service\src\user\user.controller.ts (objectSortAlphabetical) (update all POST request)
+update user-service\src\user\user.service.ts (objectSortAlphabetical) (update all POST request)
 
-NOTE : MASIH RAPIHIN DESIGN PATTERN
+update user-service\src\auth\auth.controller.ts (objectSortAlphabetical) (update all POST request) (expired_at) 
+
+update user-service\src\* (real statusCode)
+
+nest g service /etc/service/page-mongodb
+
+update user-service\src\* (auto pagenation)
 
 ```
 </details>

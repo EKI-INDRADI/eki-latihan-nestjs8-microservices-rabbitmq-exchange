@@ -15,7 +15,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     ) {
         super({
             // jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), // terlalu simple
-            jwtFromRequest: ExtractJwt.fromHeader('eki-custom-token'), //2022-02-06 //https://stackoverflow.com/questions/50317738/fromauthheaderasbearertoken-is-not-working-in-node
+            jwtFromRequest: ExtractJwt.fromHeader('eki-custom-auth-header'), //2022-02-06 //https://stackoverflow.com/questions/50317738/fromauthheaderasbearertoken-is-not-working-in-node
             ignoreExpiration: false,
             secretOrKey: process.env.JWT_SECRET_KEY,
         })
@@ -24,7 +24,6 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     async validate(payload: any) {
         //let user: any = await this.userService.findOne(payload.id)
         let user: any = await this.MongoDbConnection.model(User.name).findOne({ id: payload.id })
-
 
         let payload_custom: any = {}
         if (payload.user_payload && payload.user_payload) {

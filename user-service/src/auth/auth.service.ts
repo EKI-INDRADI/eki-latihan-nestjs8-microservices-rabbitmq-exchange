@@ -6,7 +6,7 @@ import { UserService } from 'src/user/user.service';
 export class AuthService { 
     constructor(
         private userService: UserService,
-        private jwtService: JwtService, 
+        private jwtService: JwtService
     ) {
 
     }
@@ -19,10 +19,10 @@ export class AuthService {
             if (valid) {
                 return user
             } else {
-                throw new BadRequestException({ message: 'Password salah' })
+                throw new BadRequestException({ message: 'Wrong password' })
             }
         } else {
-            throw new BadRequestException('Username tidak ditemukan')
+            throw new BadRequestException('Username not found')
         }
 
     }

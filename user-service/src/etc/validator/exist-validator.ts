@@ -22,7 +22,7 @@ export class ExistValidator implements ValidatorConstraintInterface {
     }
 
     defaultMessage(args: ValidationArguments) {
-        return args.property + ' ' + args.value + ' tidak ditemukan'
+        return args.property + ' ' + args.value + ' not found'
     }
 
 }

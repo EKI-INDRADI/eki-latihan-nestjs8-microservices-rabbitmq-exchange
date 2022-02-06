@@ -37,19 +37,19 @@ async function bootstrap() {
     //==================== GAK BS BUAT CUSTOM HEADER di controller addBearerAuth
     // .addBearerAuth( // CUSTOM
     //   { type: 'apiKey', in: 'header' },
-    //   'eki-custom-token',
+    //   'eki-custom-auth-header',
     // )
     //====================/GAK BS BUAT CUSTOM HEADER di controller addBearerAuth
 
 
     // ====================== SOLVED 
-    .addSecurity('eki-custom-token', {
+    .addSecurity('eki-custom-auth-header', {
       type: 'apiKey',
       in: 'header',
-      name: 'eki-custom-token'
+      name: 'eki-custom-auth-header'
     })
     // https://stackoverflow.com/questions/64269804/how-to-globally-apply-swagger-uis-apibearerauth-instead-of-applying-for-each
-        // .addSecurityRequirements('eki-custom-token') // JGN DIPAKE GAMBAR GEMBOK SEMUA
+        // .addSecurityRequirements('eki-custom-auth-header') // JGN DIPAKE GAMBAR GEMBOK SEMUA
     // ====================== /SOLVED 
 
 
