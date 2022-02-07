@@ -201,6 +201,22 @@ update user-service\src\* (auto pagenation)
 ```
 </details>
 
+
+<details>
+  <summary>USER-SERVICE-20220207-0004-DESIGN-PATTERN-PART2</summary>
+
+```bash
+
+update user-service\src\user\dto\create-user.dto.ts
+update user-service\src\user\dto\update-user.dto.ts
+update user-service\src\etc\dto\page-mongodb-dto.ts
+update user-service\src\user\user.controller.ts 
+update user-service\src\user\user.service.ts 
+
+```
+
+</details>
+
 ## ==== /USER SERVICE
 
  
