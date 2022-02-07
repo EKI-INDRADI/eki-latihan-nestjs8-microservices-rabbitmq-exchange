@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
-import { CreateUserDto, GetUserListDto, GetUserListDto_WithPage, RequestGetUserCustomDto_WithPage, ResponGetUserCustomDto_WithPage, UserIdDto, UserManualQueryDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { CreateUserDto, CreateUserDtoAutoSync, GetUserListDto, GetUserListDto_WithPage, RequestGetUserCustomDto_WithPage, ResponGetUserCustomDto_WithPage, UserIdDto, UserManualQueryDto } from './dto/create-user.dto';
+import { UpdateUserDto, UpdateUserDtoAutoSync } from './dto/update-user.dto';
 import { ApiBearerAuth, ApiOkResponse, ApiSecurity, ApiTags } from '@nestjs/swagger';
 import { JwtGuard } from 'src/auth/jwt.guard';
 import { ToolsService } from '../etc/service/tools/tools.service';
@@ -21,7 +21,8 @@ export class UserController {
   }
 
   @Post('/user-signup')
-  async create(@Body() createUserDto: CreateUserDto) {
+  async create(@Body() createUserDto: CreateUserDtoAutoSync) {
+    // async create(@Body() createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto);
   }
 
@@ -62,7 +63,8 @@ export class UserController {
   // async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
   //   let data = await this.userService.update(id, updateUserDto);
   @Post('/update-user')
-  async update(@Body() updateUserDto: UpdateUserDto) {
+  async update(@Body() updateUserDto: UpdateUserDtoAutoSync) {
+    // async update(@Body() updateUserDto: UpdateUserDto) {
     let res_json = await this.userService.update(updateUserDto);
     return res_json
   }

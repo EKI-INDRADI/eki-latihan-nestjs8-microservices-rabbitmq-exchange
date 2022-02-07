@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto, GetUserListDto, GetUserListDto_WithPage, UserIdDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { CreateUserDto, CreateUserDtoAutoSync, GetUserListDto, GetUserListDto_WithPage, UserIdDto } from './dto/create-user.dto';
+import { UpdateUserDto, UpdateUserDtoAutoSync } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import * as bcrypt from 'bcrypt'
 import { InjectConnection, InjectModel } from '@nestjs/mongoose';
@@ -21,12 +21,30 @@ export class UserService extends PageMongodbService {
   }
 
 
-  async create(createUserDto: CreateUserDto) {
+  async create(createUserDto: CreateUserDtoAutoSync) {
+    // async create(createUserDto: CreateUserDto) {
 
     let res_json: any = {}
     createUserDto.password = this.hash(createUserDto.password)
 
-    let data = await this.userRepo.create(createUserDto);
+    let id = String(
+      new Date().getFullYear()
+      + ("0" + (new Date().getMonth() + 1)).slice(-2)
+      + ("0" + new Date().getDate()).slice(-2)
+      + "-" + String(Date.now())
+      // + ("0" + new Date().getMinutes()).slice(-2)
+      // + ("0" + new Date().getSeconds()).slice(-2)
+      // + ("0" + new Date().getMilliseconds()).slice(-3)
+    )
+
+    let createParamsAutoSync = {
+      id: id,
+      ...createUserDto,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    }
+
+    let data = await this.userRepo.create(createParamsAutoSync);
 
     if (data && createUserDto) {
       res_json.statusCode = 200
@@ -109,7 +127,8 @@ export class UserService extends PageMongodbService {
 
   }
 
-  async update(updateUserDto: UpdateUserDto) {
+  // async update(updateUserDto: UpdateUserDto) {
+  async update(updateUserDto: UpdateUserDtoAutoSync) {
 
     let res_json: any = {}
 
@@ -120,7 +139,17 @@ export class UserService extends PageMongodbService {
     let getUser = await this.userRepo.findOne({ id: updateUserDto.id })
 
     if (getUser) {
-      let process = await this.userRepo.updateOne({ id: getUser.id }, { $set: { ...updateUserDto, updated_at: Date.now() } })
+      let GetParams = { id: getUser.id }
+      let updateParamsAutoSync = {
+        $set: {
+          ...updateUserDto,
+          updated_at: new Date().toISOString()
+        }
+      }
+
+      delete updateParamsAutoSync.$set.id
+
+      let process = await this.userRepo.updateOne(GetParams, updateParamsAutoSync)
     }
 
     if (getUser) {
@@ -177,17 +206,34 @@ export class UserService extends PageMongodbService {
         res_json.message = "success, get manualQuery"
 
         let dataSort = []
-        result.forEach((element, index) => {
-  
-          let data_after_sort = this.toolsService.objectSortAlphabetical(element.toObject()).after_sort
-          dataSort.push(data_after_sort)
-  
-          if (index == result.length - 1) {
-            res_json.data = dataSort
-          }
-  
-        })
-  
+
+        if (result && result.constructor == Array && result.length > 0) {
+
+          result.forEach((element, index) => {
+
+            let data_after_sort = this.toolsService.objectSortAlphabetical(element.toObject()).after_sort
+            dataSort.push(data_after_sort)
+
+            if (index == result.length - 1) {
+              res_json.data = dataSort
+            }
+
+          })
+
+        }
+        else if (result && typeof result == 'object') {
+
+          let resultObj = { ...result.toObject() }
+
+          resultObj._id = undefined
+          resultObj.__v = undefined
+
+          res_json.data = this.toolsService.objectSortAlphabetical(resultObj).after_sort
+
+        } else {
+          res_json.data = null
+        }
+
         // res_json.data = result
       } else {
         res_json.statusCode = 400

@@ -46,6 +46,53 @@ export class UserDto {
 
 export class CreateUserDto extends OmitType(UserDto, ['id']) { }
 
+export class CreateUserDtoAutoSync {
+    @ApiProperty()
+    @IsOptional()
+    @IsExist([User.name, 'id'])
+    id?: string
+
+    @ApiProperty({ required: true, default: 'eki testing' })
+    @IsString()
+    @MaxLength(64)
+    @MinLength(8)
+    @IsNotEmpty()
+    name: string
+
+    @ApiProperty({ default: 'ekitesting@mail.com' })
+    @IsEmail()
+    @IsUnique([User.name, 'email'])
+    @MaxLength(32)
+    @MinLength(6)
+    @IsNotEmpty()
+    email: string
+
+    @ApiProperty({ default: 'ekitesting' })
+    @IsString()
+    @MaxLength(32)
+    @MinLength(8)
+    @IsNotEmpty()
+    @IsUnique([User.name, 'username']) // sama aja @IsUnique(['User', 'username'])
+    username: string
+
+    @ApiProperty({ default: 'masuk123' })
+    @IsString()
+    @MaxLength(32)
+    @MinLength(8)
+    @IsNotEmpty()
+    password: string
+
+    @ApiHideProperty()
+    @IsOptional()
+    @IsDate()
+    created_at: Date
+
+    @ApiHideProperty()
+    @IsOptional()
+    @IsDate()
+    updated_at: Date
+}
+
 export class GetUserListDto {
 
     @ApiProperty({ required: true, default: '20220206-1644087226561' })
@@ -127,7 +174,7 @@ export class UserIdDto {
 //===================== SEMENTARA NOT USED =====================
 
 export class UserManualQueryDto {
-    @ApiProperty({ required: true, default: 'find/findOne/Aggregate' })
+    @ApiProperty({ required: true, default: 'find/findOne' })
     @IsOptional()
     variant?: string
 

@@ -95,16 +95,28 @@ export class PageMongodbService {
 
         //========================SORT
         let dataSort = []
-        await result.forEach(async (element, index) => {
+        if (result.length > 0) {
+            await result.forEach(async (element, index) => {
 
-            let data_after_sort = this.objectSortAlphabetical(element).after_sort
-            dataSort.push(data_after_sort)
+                let data_after_sort = this.objectSortAlphabetical(element).after_sort
+                dataSort.push(data_after_sort)
 
-            if (index == result.length - 1) {
-                res_json.data = dataSort
-            }
+                if (index == result.length - 1) {
+                    res_json.data = dataSort
+                }
 
-        })
+            })
+        }
+
+
+        if (result) {
+            res_json.statusCode = 200
+            res_json.message = "Success, get data pages"
+        } else {
+            res_json.statusCode = 400
+            res_json.message = "Error, not found"
+        }
+
         res_json = this.objectSortAlphabetical(res_json).after_sort
 
         //========================/SORT
