@@ -78,9 +78,7 @@ Nest is [MIT licensed](LICENSE).
 
 What is Microservice Choreography pattern :
 
-[ Youtube ](https://www.youtube.com/results?search_query=microservices+choreography)
-
-[ Google ](https://www.google.com/search?q=microservices+choreography)
+[ Youtube ](https://www.youtube.com/results?search_query=microservices+choreography) [ Google ](https://www.google.com/search?q=microservices+choreography)
   
 
 
