@@ -11,6 +11,10 @@ import { MongooseModule } from '@nestjs/mongoose';
 // import { createConnection } from 'mongoose';
 import { ToolsService } from './etc/service/tools/tools.service';
 import { PageMongodbService } from './etc/service/page-mongodb/page-mongodb.service';
+import { RabbitmqPublisherService } from './etc/service/rabbitmq-publisher/rabbitmq-publisher.service';
+import { RabbitmqPublisherModule } from './etc/service/rabbitmq-publisher/rabbitmq-publisher.module';
+import { RabbitmqSubscriberUserService } from './etc/service/rabbitmq-subscriber-user/rabbitmq-subscriber-user.service';
+import { RabbitmqSubscriberUserModule } from './etc/service/rabbitmq-subscriber-user/rabbitmq-subscriber-user.module';
 
 
 @Module({
@@ -22,10 +26,12 @@ import { PageMongodbService } from './etc/service/page-mongodb/page-mongodb.serv
       { name: User.name, schema: UserSchema }
     ]),
     UserModule,
-    AuthModule
+    AuthModule,
+    RabbitmqPublisherModule,
+    RabbitmqSubscriberUserModule
   ],
   controllers: [AppController],
-  providers: [AppService, ExistValidator, UniqueValidator, ToolsService, PageMongodbService
+  providers: [AppService, ExistValidator, UniqueValidator, ToolsService, PageMongodbService, RabbitmqPublisherService, RabbitmqSubscriberUserService
   
     // ,{
     //   provide: 'ASYNC_CONNECTION', 

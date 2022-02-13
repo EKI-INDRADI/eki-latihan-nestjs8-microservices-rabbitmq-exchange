@@ -1,29 +1,35 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto, CreateUserDtoAutoSync, GetUserListDto, GetUserListDto_WithPage, UserIdDto } from './dto/create-user.dto';
-import { UpdateUserDto, UpdateUserDtoAutoSync } from './dto/update-user.dto';
+import { CreateUserDtoAutoSync, GetUserListDto, GetUserListDto_WithPage, UserIdDto } from './dto/create-user.dto';
+import { UpdateUserDtoAutoSync } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import * as bcrypt from 'bcrypt'
 import { InjectConnection, InjectModel } from '@nestjs/mongoose';
 import { Connection, Model } from 'mongoose';
 import { lastValueFrom } from 'rxjs';
-// import { PageService } from 'src/etc/service/page/page.service';
 import { ToolsService } from 'src/etc/service/tools/tools.service';
 import { PageMongodbService } from 'src/etc/service/page-mongodb/page-mongodb.service';
+import { RabbitmqPublisherService } from 'src/etc/service/rabbitmq-publisher/rabbitmq-publisher.service';
+import { AmqpConnection } from '@golevelup/nestjs-rabbitmq';
+
+let set_exchange = 'user_service_exchange';
+
 
 @Injectable()
 export class UserService extends PageMongodbService {
+
   constructor(
     @InjectModel(User.name) private userRepo: Model<User>,
     @InjectConnection() public MongoDbConnection: Connection,
-    private readonly toolsService: ToolsService
+    private readonly toolsService: ToolsService,
+    private readonly amqpConnection: AmqpConnection,
+    private readonly rabbitmqPublisherService: RabbitmqPublisherService
   ) {
     super();
   }
 
 
-  async create(createUserDto: CreateUserDtoAutoSync) {
-    // async create(createUserDto: CreateUserDto) {
 
+  async create(createUserDto: CreateUserDtoAutoSync) {
     let res_json: any = {}
     createUserDto.password = this.hash(createUserDto.password)
 
@@ -39,10 +45,84 @@ export class UserService extends PageMongodbService {
 
     let createParamsAutoSync = {
       id: id,
+      event: "create",
+      model_main: "main_user", // for publisher model
+      model_sync: "sync_user", // for subscriber model
+      model_name: "User", // Schema Name
       ...createUserDto,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString()
     }
+
+
+    //========================= USER SERVICE
+    let set_user_service_routing_key = 'user_service_routing_key'
+    let PublisherUserService = await this.rabbitmqPublisherService.AmqpConnectionRabbitmqPublisher(this.amqpConnection, set_exchange, set_user_service_routing_key, JSON.stringify(createParamsAutoSync))
+    // .then(
+    //   async (rabbitmqPublisher: any) => { // FIX PROGRESSIVE BACKEND
+    //     console.log(`Success sent message `)
+    //   } // end then async
+    // ) //end async
+    if (PublisherUserService && PublisherUserService.statusCode == 1) {
+      console.log(`Success sent message routing_key : ${set_user_service_routing_key}, \nevent : ${createParamsAutoSync.event}, \nmodel_name : ${createParamsAutoSync.model_name}, \n${createParamsAutoSync.model_main} -> ${createParamsAutoSync.model_sync}\n `)
+    }
+    //========================= /USER SERVICE
+
+    //========================= PRODUCT SERVICE
+    let set_product_service_routing_key = 'product_service_routing_key'
+    let PublisherProductService = await this.rabbitmqPublisherService.AmqpConnectionRabbitmqPublisher(this.amqpConnection, set_exchange, set_product_service_routing_key, JSON.stringify(createParamsAutoSync))
+    if (PublisherProductService && PublisherProductService.statusCode == 1) {
+      console.log(`Success sent message routing_key : ${set_product_service_routing_key}, \nevent : ${createParamsAutoSync.event}, \nmodel_name : ${createParamsAutoSync.model_name}, \n${createParamsAutoSync.model_main} -> ${createParamsAutoSync.model_sync}\n `)
+    }
+    //========================= /PRODUCT SERVICE
+
+    //========================= INVENTORY SERVICE
+    let set_inventory_service_routing_key = 'inventory_service_routing_key'
+    let PublisherInventoryService = await this.rabbitmqPublisherService.AmqpConnectionRabbitmqPublisher(this.amqpConnection, set_exchange, set_inventory_service_routing_key, JSON.stringify(createParamsAutoSync))
+    if (PublisherInventoryService && PublisherInventoryService.statusCode == 1) {
+      console.log(`Success sent message routing_key : ${set_inventory_service_routing_key}, \nevent : ${createParamsAutoSync.event}, \nmodel_name : ${createParamsAutoSync.model_name}, \n${createParamsAutoSync.model_main} -> ${createParamsAutoSync.model_sync}\n `)
+    }
+    //========================= /INVENTORY SERVICE
+
+    //========================= ORDER SERVICE
+    let set_order_service_routing_key = 'order_service_routing_key'
+    let PublisherIOrderService = await this.rabbitmqPublisherService.AmqpConnectionRabbitmqPublisher(this.amqpConnection, set_exchange, set_order_service_routing_key, JSON.stringify(createParamsAutoSync))
+    if (PublisherIOrderService && PublisherIOrderService.statusCode == 1) {
+      console.log(`Success sent message routing_key : ${set_order_service_routing_key}, \nevent : ${createParamsAutoSync.event}, \nmodel_name : ${createParamsAutoSync.model_name}, \n${createParamsAutoSync.model_main} -> ${createParamsAutoSync.model_sync}\n `)
+    }
+    //========================= /ORDER SERVICE
+
+    //========================= NOTIFICATION SERVICE
+    let set_notification_service_routing_key = 'notification_service_routing_key'
+    let PublisherNotificationService = await this.rabbitmqPublisherService.AmqpConnectionRabbitmqPublisher(this.amqpConnection, set_exchange, set_notification_service_routing_key, JSON.stringify(createParamsAutoSync))
+    if (PublisherNotificationService && PublisherNotificationService.statusCode == 1) {
+      console.log(`Success sent message routing_key : ${set_notification_service_routing_key}, \nevent : ${createParamsAutoSync.event}, \nmodel_name : ${createParamsAutoSync.model_name}, \n${createParamsAutoSync.model_main} -> ${createParamsAutoSync.model_sync}\n `)
+    }
+    //========================= /NOTIFICATION SERVICE
+
+    //========================= PAYMENT SERVICE
+    let set_payment_service_routing_key = 'payment_service_routing_key'
+    let PublisherPaymentService = await this.rabbitmqPublisherService.AmqpConnectionRabbitmqPublisher(this.amqpConnection, set_exchange, set_payment_service_routing_key, JSON.stringify(createParamsAutoSync))
+    if (PublisherPaymentService && PublisherPaymentService.statusCode == 1) {
+      console.log(`Success sent message routing_key : ${set_payment_service_routing_key}, \nevent : ${createParamsAutoSync.event}, \nmodel_name : ${createParamsAutoSync.model_name}, \n${createParamsAutoSync.model_main} -> ${createParamsAutoSync.model_sync}\n `)
+    }
+    //========================= /PAYMENT SERVICE
+
+    //========================= PRINCIPAL SERVICE
+    let set_principal_service_routing_key = 'principal_service_routing_key'
+    let PublishePrincipalService = await this.rabbitmqPublisherService.AmqpConnectionRabbitmqPublisher(this.amqpConnection, set_exchange, set_principal_service_routing_key, JSON.stringify(createParamsAutoSync))
+    if (PublishePrincipalService && PublishePrincipalService.statusCode == 1) {
+      console.log(`Success sent message routing_key : ${set_principal_service_routing_key}, \nevent : ${createParamsAutoSync.event}, \nmodel_name : ${createParamsAutoSync.model_name}, \n${createParamsAutoSync.model_main} -> ${createParamsAutoSync.model_sync}\n `)
+    }
+    //========================= /PRINCIPAL SERVICE
+
+    //========================= STORE SERVICE
+    let set_store_service_routing_key = 'store_service_routing_key'
+    let PublisheStoreService = await this.rabbitmqPublisherService.AmqpConnectionRabbitmqPublisher(this.amqpConnection, set_exchange, set_store_service_routing_key, JSON.stringify(createParamsAutoSync))
+    if (PublisheStoreService && PublisheStoreService.statusCode == 1) {
+      console.log(`Success sent message routing_key : ${set_store_service_routing_key}, \nevent : ${createParamsAutoSync.event}, \nmodel_name : ${createParamsAutoSync.model_name}, \n${createParamsAutoSync.model_main} -> ${createParamsAutoSync.model_sync}\n `)
+    }
+    //========================= /STORE SERVICE
 
     let data = await this.userRepo.create(createParamsAutoSync);
 
@@ -94,10 +174,6 @@ export class UserService extends PageMongodbService {
 
   }
 
-  // async findAllPages(getUserListDto_WithPage: GetUserListDto_WithPage) {
-  //   return this.mongodbGeneratePage(getUserListDto_WithPage, User.name, this.MongoDbConnection)
-  // }
-
   async findAllPages(getUserListDto_WithPage: GetUserListDto_WithPage) {
     return await this.mongodbGeneratePage(getUserListDto_WithPage, User.name, this.MongoDbConnection)
   }
@@ -139,6 +215,13 @@ export class UserService extends PageMongodbService {
     let getUser = await this.userRepo.findOne({ id: updateUserDto.id })
 
     if (getUser) {
+
+      let SyncInfo = {
+        event: "update",
+        model_main: "main_user", // for publisher model
+        model_sync: "sync_user", // for subscriber model
+        model_name: "User", // Schema Name
+      }
       let GetParams = { id: getUser.id }
       let updateParamsAutoSync = {
         $set: {
@@ -148,6 +231,87 @@ export class UserService extends PageMongodbService {
       }
 
       delete updateParamsAutoSync.$set.id
+
+      //======================================= MICROSERVICE
+
+
+      let updateParamsAutoSyncMicroService = {
+        ...SyncInfo,
+        condition: GetParams,
+        update: updateParamsAutoSync
+      }
+
+
+      //========================= USER SERVICE
+      let set_user_service_routing_key = 'user_service_routing_key'
+      let PublisherUserService = await this.rabbitmqPublisherService.AmqpConnectionRabbitmqPublisher(this.amqpConnection, set_exchange, set_user_service_routing_key, JSON.stringify(updateParamsAutoSyncMicroService))
+      // .then(
+      //   async (rabbitmqPublisher: any) => { // FIX PROGRESSIVE BACKEND
+      //     console.log(`Success sent message `)
+      //   } // end then async
+      // ) //end async
+      if (PublisherUserService && PublisherUserService.statusCode == 1) {
+        console.log(`Success sent message routing_key : ${set_user_service_routing_key}, \nevent : ${updateParamsAutoSyncMicroService.event}, \nmodel_name : ${updateParamsAutoSyncMicroService.model_name}, \n${updateParamsAutoSyncMicroService.model_main} -> ${updateParamsAutoSyncMicroService.model_sync}\n `)
+      }
+      //========================= /USER SERVICE
+
+      //========================= PRODUCT SERVICE
+      let set_product_service_routing_key = 'product_service_routing_key'
+      let PublisherProductService = await this.rabbitmqPublisherService.AmqpConnectionRabbitmqPublisher(this.amqpConnection, set_exchange, set_product_service_routing_key, JSON.stringify(updateParamsAutoSyncMicroService))
+      if (PublisherProductService && PublisherProductService.statusCode == 1) {
+        console.log(`Success sent message routing_key : ${set_product_service_routing_key}, \nevent : ${updateParamsAutoSyncMicroService.event}, \nmodel_name : ${updateParamsAutoSyncMicroService.model_name}, \n${updateParamsAutoSyncMicroService.model_main} -> ${updateParamsAutoSyncMicroService.model_sync}\n `)
+      }
+      //========================= /PRODUCT SERVICE
+
+      //========================= INVENTORY SERVICE
+      let set_inventory_service_routing_key = 'inventory_service_routing_key'
+      let PublisherInventoryService = await this.rabbitmqPublisherService.AmqpConnectionRabbitmqPublisher(this.amqpConnection, set_exchange, set_inventory_service_routing_key, JSON.stringify(updateParamsAutoSyncMicroService))
+      if (PublisherInventoryService && PublisherInventoryService.statusCode == 1) {
+        console.log(`Success sent message routing_key : ${set_inventory_service_routing_key}, \nevent : ${updateParamsAutoSyncMicroService.event}, \nmodel_name : ${updateParamsAutoSyncMicroService.model_name}, \n${updateParamsAutoSyncMicroService.model_main} -> ${updateParamsAutoSyncMicroService.model_sync}\n `)
+      }
+      //========================= /INVENTORY SERVICE
+
+      //========================= ORDER SERVICE
+      let set_order_service_routing_key = 'order_service_routing_key'
+      let PublisherIOrderService = await this.rabbitmqPublisherService.AmqpConnectionRabbitmqPublisher(this.amqpConnection, set_exchange, set_order_service_routing_key, JSON.stringify(updateParamsAutoSyncMicroService))
+      if (PublisherIOrderService && PublisherIOrderService.statusCode == 1) {
+        console.log(`Success sent message routing_key : ${set_order_service_routing_key}, \nevent : ${updateParamsAutoSyncMicroService.event}, \nmodel_name : ${updateParamsAutoSyncMicroService.model_name}, \n${updateParamsAutoSyncMicroService.model_main} -> ${updateParamsAutoSyncMicroService.model_sync}\n `)
+      }
+      //========================= /ORDER SERVICE
+
+      //========================= NOTIFICATION SERVICE
+      let set_notification_service_routing_key = 'notification_service_routing_key'
+      let PublisherNotificationService = await this.rabbitmqPublisherService.AmqpConnectionRabbitmqPublisher(this.amqpConnection, set_exchange, set_notification_service_routing_key, JSON.stringify(updateParamsAutoSyncMicroService))
+      if (PublisherNotificationService && PublisherNotificationService.statusCode == 1) {
+        console.log(`Success sent message routing_key : ${set_notification_service_routing_key}, \nevent : ${updateParamsAutoSyncMicroService.event}, \nmodel_name : ${updateParamsAutoSyncMicroService.model_name}, \n${updateParamsAutoSyncMicroService.model_main} -> ${updateParamsAutoSyncMicroService.model_sync}\n `)
+      }
+      //========================= /NOTIFICATION SERVICE
+
+      //========================= PAYMENT SERVICE
+      let set_payment_service_routing_key = 'payment_service_routing_key'
+      let PublisherPaymentService = await this.rabbitmqPublisherService.AmqpConnectionRabbitmqPublisher(this.amqpConnection, set_exchange, set_payment_service_routing_key, JSON.stringify(updateParamsAutoSyncMicroService))
+      if (PublisherPaymentService && PublisherPaymentService.statusCode == 1) {
+        console.log(`Success sent message routing_key : ${set_payment_service_routing_key}, \nevent : ${updateParamsAutoSyncMicroService.event}, \nmodel_name : ${updateParamsAutoSyncMicroService.model_name}, \n${updateParamsAutoSyncMicroService.model_main} -> ${updateParamsAutoSyncMicroService.model_sync}\n `)
+      }
+      //========================= /PAYMENT SERVICE
+
+      //========================= PRINCIPAL SERVICE
+      let set_principal_service_routing_key = 'principal_service_routing_key'
+      let PublishePrincipalService = await this.rabbitmqPublisherService.AmqpConnectionRabbitmqPublisher(this.amqpConnection, set_exchange, set_principal_service_routing_key, JSON.stringify(updateParamsAutoSyncMicroService))
+      if (PublishePrincipalService && PublishePrincipalService.statusCode == 1) {
+        console.log(`Success sent message routing_key : ${set_principal_service_routing_key}, \nevent : ${updateParamsAutoSyncMicroService.event}, \nmodel_name : ${updateParamsAutoSyncMicroService.model_name}, \n${updateParamsAutoSyncMicroService.model_main} -> ${updateParamsAutoSyncMicroService.model_sync}\n `)
+      }
+      //========================= /PRINCIPAL SERVICE
+
+      //========================= STORE SERVICE
+      let set_store_service_routing_key = 'store_service_routing_key'
+      let PublisheStoreService = await this.rabbitmqPublisherService.AmqpConnectionRabbitmqPublisher(this.amqpConnection, set_exchange, set_store_service_routing_key, JSON.stringify(updateParamsAutoSyncMicroService))
+      if (PublisheStoreService && PublisheStoreService.statusCode == 1) {
+        console.log(`Success sent message routing_key : ${set_store_service_routing_key}, \nevent : ${updateParamsAutoSyncMicroService.event}, \nmodel_name : ${updateParamsAutoSyncMicroService.model_name}, \n${updateParamsAutoSyncMicroService.model_main} -> ${updateParamsAutoSyncMicroService.model_sync}\n `)
+      }
+      //========================= /STORE SERVICE
+
+      //======================================= /MICROSERVICE
 
       let process = await this.userRepo.updateOne(GetParams, updateParamsAutoSync)
     }

@@ -16,7 +16,7 @@ export class AuthController {
   }
 
   // @Get()
-  @Post('/check-user-sign')
+  @Post('/check-user-sign-in')
   // @ApiBearerAuth() // terlalu simple
 
   //================== INI MEMUNCULKAN TEXTBOX UNTUK ISI HEADER 'eki-custom-auth-header'
@@ -56,7 +56,7 @@ export class AuthController {
     return res_json
   }
 
-  @Post('/user-sign')
+  @Post('/user-sign-in')
   async loginController(@Body() authDto: AuthDto) {
 
     let res_json: any = {}

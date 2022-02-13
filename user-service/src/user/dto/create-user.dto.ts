@@ -44,10 +44,10 @@ export class UserDto {
 
 }
 
-export class CreateUserDto extends OmitType(UserDto, ['id']) { }
+// export class CreateUserDto extends OmitType(UserDto, ['id']) { }
 
 export class CreateUserDtoAutoSync {
-    @ApiProperty()
+    @ApiHideProperty()
     @IsOptional()
     @IsExist([User.name, 'id'])
     id?: string

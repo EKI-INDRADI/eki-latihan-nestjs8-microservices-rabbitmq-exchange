@@ -76,27 +76,92 @@ Nest is [MIT licensed](LICENSE).
 
 ## SERVICE :
 
+What is Microservice Choreography pattern :
+
+[ Youtube ](https://www.youtube.com/results?search_query=microservices+choreography)
+
+[ Google ](https://www.google.com/search?q=microservices+choreography)
+  
+
 
 <details>
-  <summary>[click] USER SERVICE</summary>
+  <summary>[CLICK] USER SERVICE - CHOREOGRAPHY PATTERN [DONE]</summary>
 
-[==> USER SERVICE](/user-service/README.md)
+[ CLICK HERE ](/user-service/README.md)
 
 </details>
 
 
 <details>
-  <summary>[click] PRODUCT SERVICE</summary>
+  <summary>[CLICK] PRODUCT SERVICE - CHOREOGRAPHY PATTERN [INPROGRESS]</summary>
+
+[INPROGRESS]
+
+</details>
+
+<details>
+  <summary>[CLICK] INVENTORY SERVICE - CHOREOGRAPHY PATTERN [INPROGRESS]</summary>
 
 [INPROGRESS]
 
 </details>
 
 
+<details>
+  <summary>[CLICK] ORDER SERVICE - CHOREOGRAPHY PATTERN [INPROGRESS]</summary>
+
+[INPROGRESS]
+
+</details>
+
+
+<details>
+  <summary>[CLICK] NOTIFICATION SERVICE - CHOREOGRAPHY PATTERN [INPROGRESS]</summary>
+
+[INPROGRESS]
+
+</details>
+
+
+<details>
+  <summary>[CLICK] PAYMENT SERVICE - CHOREOGRAPHY PATTERN [INPROGRESS]</summary>
+
+[INPROGRESS]
+
+</details>
+
+
+<details>
+  <summary>[CLICK] PRINCIPAL SERVICE - CHOREOGRAPHY PATTERN [INPROGRESS]</summary>
+
+[INPROGRESS]
+
+</details>
+
+
+<details>
+  <summary>[CLICK] STORE SERVICE - CHOREOGRAPHY PATTERN [INPROGRESS]</summary>
+
+[INPROGRESS]
+
+</details>
+
+
+<details>
+  <summary>[CLICK] UPLOAD SERVICE - CHOREOGRAPHY PATTERN [INPROGRESS]</summary>
+
+[INPROGRESS]
+
+</details>
+
+
+
  
 ## REFERENCE :
 
 ```bash
+
+https://www.youtube.com/playlist?list=PL-CtdCApEFH-MtoBwQ0F3xNG21yjt5Kvs
 
 https://www.npmjs.com/package/@golevelup/nestjs-rabbitmq
 

@@ -1,12 +1,11 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
-import { CreateUserDto, CreateUserDtoAutoSync, GetUserListDto, GetUserListDto_WithPage, RequestGetUserCustomDto_WithPage, ResponGetUserCustomDto_WithPage, UserIdDto, UserManualQueryDto } from './dto/create-user.dto';
-import { UpdateUserDto, UpdateUserDtoAutoSync } from './dto/update-user.dto';
+import { CreateUserDtoAutoSync, GetUserListDto, GetUserListDto_WithPage, RequestGetUserCustomDto_WithPage, ResponGetUserCustomDto_WithPage, UserIdDto, UserManualQueryDto } from './dto/create-user.dto';
+import { UpdateUserDtoAutoSync } from './dto/update-user.dto';
 import { ApiBearerAuth, ApiOkResponse, ApiSecurity, ApiTags } from '@nestjs/swagger';
 import { JwtGuard } from 'src/auth/jwt.guard';
 import { ToolsService } from '../etc/service/tools/tools.service';
-
-
+import { RabbitmqPublisherService } from 'src/etc/service/rabbitmq-publisher/rabbitmq-publisher.service';
 
 
 @ApiTags('User')
@@ -20,9 +19,8 @@ export class UserController {
 
   }
 
-  @Post('/user-signup')
+  @Post('/user-sign-up')
   async create(@Body() createUserDto: CreateUserDtoAutoSync) {
-    // async create(@Body() createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto);
   }
 

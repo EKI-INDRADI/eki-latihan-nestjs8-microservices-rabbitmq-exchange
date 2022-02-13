@@ -213,6 +213,121 @@ update user-service\src\etc\dto\page-mongodb-dto.ts
 update user-service\src\user\user.controller.ts 
 update user-service\src\user\user.service.ts 
 
+
+```
+
+</details>
+
+<details>
+  <summary>USER-SERVICE-20220213-0005-RABBITMQ-USER</summary>
+
+```bash
+
+nest g service /etc/service/rabbitmq-publisher
+nest g module /etc/service/rabbitmq-publisher
+
+nest g service /etc/service/rabbitmq-subscriber-user
+nest g module /etc/service/rabbitmq-subscriber-user
+
+npm i @golevelup/nestjs-rabbitmq
+
+update src\user\dto\create-user.dto.ts
+update src\user\dto\update-user.dto.ts
+update src\user\user.controller.ts
+update src\user\user.module.ts
+update src\user\user.service.ts
+update src\app.module.ts
+
+
+NOTE : 
+- MICROSERVICE INI SERVICE TIDAK KETERGANTUNG SATU SAMA LAIN (Microservice Choreography Pattern), 
+- KARENA DI SETIAP DATABASE SERVICE MASING2 DATA AKAN AUTO UPDATE (AUTO SYNC),
+
+
+=== CREATE
+Success sent message routing_key : user_service_routing_key, 
+event : create,
+model_name : User,
+main_user -> sync_user
+
+Success sent message routing_key : product_service_routing_key, 
+event : create,
+model_name : User,
+main_user -> sync_user
+
+Success sent message routing_key : inventory_service_routing_key,
+event : create,
+model_name : User,
+main_user -> sync_user
+
+Success sent message routing_key : order_service_routing_key,
+event : create,
+model_name : User,
+main_user -> sync_user
+
+Success sent message routing_key : notification_service_routing_key,
+event : create,
+model_name : User,
+main_user -> sync_user
+
+Success sent message routing_key : payment_service_routing_key,
+event : create,
+model_name : User,
+main_user -> sync_user
+
+Success sent message routing_key : principal_service_routing_key,
+event : create,
+model_name : User,
+main_user -> sync_user
+
+Success sent message routing_key : store_service_routing_key,
+event : create,
+model_name : User,
+main_user -> sync_user
+=== /CREATE
+
+=== UPDATE
+Success sent message routing_key : user_service_routing_key, 
+event : update,
+model_name : User,
+main_user -> sync_user
+
+Success sent message routing_key : product_service_routing_key, 
+event : update,
+model_name : User,
+main_user -> sync_user
+
+Success sent message routing_key : inventory_service_routing_key,
+event : update,
+model_name : User,
+main_user -> sync_user
+
+Success sent message routing_key : order_service_routing_key,
+event : update,
+model_name : User,
+main_user -> sync_user
+
+Success sent message routing_key : notification_service_routing_key,
+event : update,
+model_name : User,
+main_user -> sync_user
+
+Success sent message routing_key : payment_service_routing_key,
+event : update,
+model_name : User,
+main_user -> sync_user
+
+Success sent message routing_key : principal_service_routing_key,
+event : update,
+model_name : User,
+main_user -> sync_user
+
+Success sent message routing_key : store_service_routing_key,
+event : update,
+model_name : User,
+main_user -> sync_user
+=== /UPDATE
+
 ```
 
 </details>
@@ -223,6 +338,8 @@ update user-service\src\user\user.service.ts
 ## REFERENCE :
 
 ```bash
+
+https://www.youtube.com/playlist?list=PL-CtdCApEFH-MtoBwQ0F3xNG21yjt5Kvs
 
 https://www.npmjs.com/package/@golevelup/nestjs-rabbitmq
 
