@@ -95,12 +95,12 @@ export class AuthController {
 
     if (generateToken) {
       res_json.statusCode = 200
-      res_json.message = "success, sign"
+      res_json.message = "success, sign-in"
       generateToken = this.toolsService.objectSortAlphabetical(generateToken).after_sort
       res_json.data = generateToken
     } else {
       res_json.statusCode = 400
-      res_json.message = "error, sign"
+      res_json.message = "error, sign-in"
     }
 
     res_json = this.toolsService.objectSortAlphabetical(res_json).after_sort

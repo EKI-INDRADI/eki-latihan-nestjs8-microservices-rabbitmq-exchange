@@ -332,6 +332,20 @@ main_user -> sync_user
 
 </details>
 
+
+<details>
+  <summary>USER-SERVICE-20220215-0006-RABBITMQ-AUTO-GEN-CRUD-MS</summary>
+
+```bash
+
+Auto generate crud microservices (choreography)
+
+update src\user\user-service\src\user\user.service.ts
+
+```
+
+</details>
+
 ## ==== /USER SERVICE
 
  

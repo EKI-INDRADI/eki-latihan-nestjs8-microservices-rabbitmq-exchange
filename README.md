@@ -74,13 +74,29 @@ Nest is [MIT licensed](LICENSE).
 
 
 
-## SERVICE :
 
-What is Microservice Choreography pattern :
 
-[ Youtube ](https://www.youtube.com/results?search_query=microservices+choreography) [ Google ](https://www.google.com/search?q=microservices+choreography)
-  
+ ## ROAD MAP :
+ 
 
+ 1. -> MICROSERVICES CHOREOGRAPHY PATTERN [INPROGRESS]
+
+   - USER SERVICE AUTO SYNC (WITHOUT API GATEWAY, INJECT AUTH TO ALL SERVICE) [DONE]
+
+
+
+ 2. -> PORT AND ADAPTER HEXAGONAL ARCHITECTURE [INPROGRESS]
+
+   - SUPPORT ENTITY CONCEPT(MODEL) [DONE], 
+
+   - SUPPORT VALIDATOR CONCEPT(INTERFACE/MODULAR CLASS) [DONE], 
+
+   - SUPPORT MANY REPOSITORY() [DONE]
+
+   - MODULAR GRAPHQL <-> JSON [INPROGRESS]
+
+
+ ## SERVICE :
 
 <details>
   <summary>[CLICK] USER SERVICE - CHOREOGRAPHY PATTERN [DONE]</summary>
