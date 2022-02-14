@@ -83,7 +83,7 @@ https://github.com/EKI-INDRADI/eki-latihan-docker-mongodb (mongodb 5.xx)
 
 mongosh admin -u 'root' -p 'masuk123'
 show dbs
-use simple_pos
+use main_user
 ```
 
 ## 2. install nodejs & nestjs
