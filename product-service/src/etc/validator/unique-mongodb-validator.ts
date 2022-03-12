@@ -1,12 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { registerDecorator, ValidationArguments, ValidationOptions, ValidatorConstraint, ValidatorConstraintInterface } from 'class-validator';
-
 import { InjectConnection } from '@nestjs/mongoose';
+import { registerDecorator, ValidationArguments, ValidationOptions, ValidatorConstraint, ValidatorConstraintInterface } from 'class-validator';
 import { Connection } from 'mongoose';
 
-@ValidatorConstraint({ async: true })
+@ValidatorConstraint({ async: true }) 
 @Injectable()
-export class UniqueValidator implements ValidatorConstraintInterface {
+export class UniqueMongodbValidator implements ValidatorConstraintInterface {
     constructor(
         @InjectConnection() private MongoDbConnection: Connection,
     ) { }
@@ -35,15 +34,15 @@ export class UniqueValidator implements ValidatorConstraintInterface {
 
 }
 
-export function IsUnique(option: any, validationOption?: ValidationOptions) {
+export function IsUniqueMongodb(option: any, validationOption?: ValidationOptions) {
     return function (object: any, propertyName: string) {
         registerDecorator({
-            name: 'IsUnique',
+            name: 'IsUniqueMongodb',
             target: object.constructor,
             propertyName: propertyName,
             constraints: option,
             options: validationOption,
-            validator: UniqueValidator,
+            validator: UniqueMongodbValidator,
             async: true
         })
     }

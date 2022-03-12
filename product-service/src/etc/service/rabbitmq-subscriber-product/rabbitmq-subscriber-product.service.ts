@@ -1,16 +1,15 @@
 import { RabbitSubscribe } from '@golevelup/nestjs-rabbitmq';
 import { Injectable } from '@nestjs/common';
 
-
-let set_queue = 'product_service_user_main_queue'
+let set_queue = 'product_service_product_main_queue'
 
 @Injectable()
-export class RabbitmqSubscriberUserService {
+export class RabbitmqSubscriberProductService {
     @RabbitSubscribe({
-        exchange: 'user_service_exchange',
-        routingKey: 'user_service_routing_key',
+        exchange: 'product_service_exchange',
+        routingKey: 'product_service_routing_key',
         //https://github.com/golevelup/nestjs/issues/208
-        queue: set_queue, // unique
+        queue: set_queue,
         queueOptions: {
             durable: false, // DISABLE MULTI REQUEST (DISABLE DURABLE TRUE)
             exclusive: false,
@@ -19,8 +18,9 @@ export class RabbitmqSubscriberUserService {
     })
 
     public async RabbitmqSubscriber(message: any) {
-        // console.log(`received message from user_service : \n${JSON.stringify(message)}`);
-        console.log(`received message from ${set_queue} :`);
+        // console.log(`received message from product_service : \n${JSON.stringify(message)}`);
+
+        console.log(`received message from ${set_queue}:`);
         console.log(`msg :`)
         let params = await JSON.parse(message.msg)
         console.log(params)
@@ -28,5 +28,4 @@ export class RabbitmqSubscriberUserService {
         // console.log(`statusCode : ${generate.statusCode}`)
         console.log(`statusCode : 200`)
     }
-
 }

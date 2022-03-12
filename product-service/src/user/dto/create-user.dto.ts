@@ -3,13 +3,12 @@ import { User } from "../entities/user.entity"
 import { ApiHideProperty, OmitType, PickType } from "@nestjs/swagger"
 import { ApiProperty } from "@nestjs/swagger"
 import { PageMongodbRequestDto, PageMongodbResponseDto } from "src/etc/dto/page-mongodb-dto"
-import { IsUniqueMongodb } from "src/etc/validator/unique-mongodb-validator"
 import { IsExistMongodb } from "src/etc/validator/exist-mongodb-validator"
+import { IsUniqueMongodb } from "src/etc/validator/unique-mongodb-validator"
 
 export class UserDto {
     @ApiProperty()
     @IsOptional()
-    // @IsExist([User.name, 'id'])
     @IsExistMongodb([User.name, 'id'])
     id?: string
 
@@ -33,8 +32,7 @@ export class UserDto {
     @MaxLength(32)
     @MinLength(8)
     @IsNotEmpty()
-    // @IsUnique([User.name, 'username']) // sama aja @IsUnique(['User', 'username'])
-    @IsUniqueMongodb([User.name, 'username']) // sama aja @IsUnique(['User', 'username'])
+    @IsUniqueMongodb([User.name, 'username']) 
     username: string
 
     @ApiProperty({ default: 'masuk123' })
@@ -74,7 +72,7 @@ export class CreateUserDtoAutoSync {
     @MaxLength(32)
     @MinLength(8)
     @IsNotEmpty()
-    @IsUniqueMongodb([User.name, 'username']) // sama aja @IsUnique(['User', 'username'])
+    @IsUniqueMongodb([User.name, 'username']) 
     username: string
 
     @ApiProperty({ default: 'masuk123' })

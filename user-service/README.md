@@ -346,6 +346,26 @@ update src\user\user-service\src\user\user.service.ts
 
 </details>
 
+
+<details>
+  <summary>USER-SERVICE-20220312-0007-QUEUE-UNIQUE-UPDATE</summary>
+
+update src\etc\service\rabbitmq-subscriber-user\rabbitmq-subscriber-user.service.ts
+update src\user\user.service.ts
+
+</details>
+
+<details>
+  <summary>USER-SERVICE-20220312-0008-PROVIDER-VALIDATOR-MONGODB</summary>
+
+exist-validator -> exist-mongodb-validator
+nest g provider etc/validator/exist-mongodb-validator
+
+unique-validator -> unique-mongodb-validator
+nest g provider etc/validator/unique-mongodb-validator
+
+</details>
+
 ## ==== /USER SERVICE
 
  

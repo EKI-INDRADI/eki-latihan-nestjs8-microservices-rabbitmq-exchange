@@ -1,18 +1,20 @@
-import { Injectable } from '@nestjs/common';
+import { ConsoleLogger, Injectable } from '@nestjs/common';
 import { CreateUserDtoAutoSync, GetUserListDto, GetUserListDto_WithPage, UserIdDto } from './dto/create-user.dto';
 import { UpdateUserDtoAutoSync } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import * as bcrypt from 'bcrypt'
 import { InjectConnection, InjectModel } from '@nestjs/mongoose';
 import { Connection, Model, StringSchemaDefinition } from 'mongoose';
-import { lastValueFrom } from 'rxjs';
+import { lastValueFrom, throwError } from 'rxjs';
 import { ToolsService } from 'src/etc/service/tools/tools.service';
 import { PageMongodbService } from 'src/etc/service/page-mongodb/page-mongodb.service';
 import { RabbitmqPublisherService } from 'src/etc/service/rabbitmq-publisher/rabbitmq-publisher.service';
-import { AmqpConnection } from '@golevelup/nestjs-rabbitmq';
+import { AmqpConnection, RabbitSubscribe } from '@golevelup/nestjs-rabbitmq';
+import { Console } from 'console';
 
 let set_exchange = 'user_service_exchange';
-let set_model_event = 'main'
+let set_model_event = 'sync'
+let set_queue = 'product_service_user_sync_queue'
 
 @Injectable()
 export class UserService extends PageMongodbService {
@@ -26,6 +28,34 @@ export class UserService extends PageMongodbService {
   ) {
     super();
   }
+
+  //================================================ SUBSCRIBER
+  @RabbitSubscribe({
+    exchange: 'user_service_exchange',
+    routingKey: 'product_service_routing_key', 
+    //https://github.com/golevelup/nestjs/issues/208
+    queue: set_queue, // unique
+    queueOptions: {
+      durable: false, // DISABLE MULTI REQUEST (DISABLE DURABLE TRUE)
+      exclusive: false,
+      autoDelete: false,
+    },
+  })
+
+  public async RabbitmqSubscriber(message: any) {
+    // console.log(`received message from user_service : \n${message}`);
+
+    console.log(`received message from ${set_queue} :`);
+    console.log(`msg :`)
+    let params = await JSON.parse(message.msg)
+    console.log(params)
+    let generate = await this.create(params)
+    console.log(`statusCode : ${generate.statusCode}`)
+
+    // return generate
+  }
+
+  //================================================ /SUBSCRIBER
 
   async generateUserMicroservice(AmqpConnection: any, setEvent: string, setModel: string, setModelMain: string, setModelSync: string, setObject: object) {
 
@@ -403,7 +433,7 @@ export class UserService extends PageMongodbService {
       //======================================= /MICROSERVICE
       if (updateParamsAutoSync && updateParamsAutoSync.$set && updateParamsAutoSync.$set.password) {
         updateParamsAutoSync.$set.password = this.hash(updateParamsAutoSync.$set.password)
-      }
+      } 
       let process = await this.userRepo.updateOne(GetParams, updateParamsAutoSync)
     }
 

@@ -73,140 +73,147 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 Nest is [MIT licensed](LICENSE).
 
 
+## 1. installation Docker, Mongodb
+```bash
+install vm alpine + docker
+https://github.com/EKI-INDRADI/eki-latihan-vm-alpine-docker-portable
+
+install Docker, Mongodb
+https://github.com/EKI-INDRADI/eki-latihan-docker-mongodb (mongodb 5.xx)
+
+mongosh admin -u 'root' -p 'masuk123'
+show dbs
+use ms_product_service
+```
+
+## 2. install nodejs & nestjs
+
+```bash
+install nodejs   (https://nodejs.org)
+
+npm i -g @nestjs/cli
+nest --version
+```
+
+## 3. CLI & note
 
 
-
- ## ROAD MAP :
- 
-
- 1. MICROSERVICES CHOREOGRAPHY PATTERN [INPROGRESS]
-
-   - USER SERVICE -> INJECT DATABASE MONGODB [DONE]
-
-   - USER SERVICE AUTH (WITHOUT API GATEWAY, INJECT AUTH TO ALL SERVICE) [DONE]
-
-   - USER SERVICE -> AUTO SWAGGER [DONE]
-
-   - USER SERVICE AUTO SYNC MESSAGE -> AUTO VALIDATION -> USER CRUD PUBLISHER -> TO ALL SERVICE [DONE]
-
-   - PRODUCT SERVICE -> INJECT DATABASE MONGODB & POSTGRESQL [DONE]
-
-   - PRODUCT SERVICE AUTH (SAME TOKEN WITH USER SERVICE) [DONE]
-
-   - PRODUCT SERVICE -> AUTO SWAGGER [DONE]
-
-   - PRODUCT SERVICE AUTO SYNC MESSAGE -> AUTO VALIDATION -> USER CRUD SUBSCRIBER  [DONE]
-
-   - PRODUCT SERVICE AUTO SYNC MESSAGE -> AUTO VALIDATION -> PRODUCT CRUD PUBLISHER -> INVENTORY SERVICE [INPROGRESS]
-
-   - INVENTORY SERVICE -> INJECT DATABASE MONGODB & POSTGRESQL [INPROGRESS]
-
-   - INVENTORY SERVICE AUTH (SAME TOKEN WITH USER SERVICE) [INPROGRESS]
-
-   - INVENTORY SERVICE -> AUTO SWAGGER [INPROGRESS]
-
-   - INVENTORY SERVICE AUTO SYNC MESSAGE -> AUTO VALIDATION -> USER CRUD SUBSCRIBER  [INPROGRESS]
-
-   - INVENTORY SERVICE AUTO SYNC MESSAGE -> AUTO VALIDATION -> PRODUCT CRUD PUBLISHER -> INVENTORY SERVICE [INPROGRESS]
-
-   - UPLOAD SERVICE -> INJECT DATABASE MONGODB & SQLITE [INPROGRESS]
-
-   - UPLOAD SERVICE AUTH (SAME TOKEN WITH USER SERVICE) [INPROGRESS]
-
-   - UPLOAD SERVICE -> AUTO SWAGGER [INPROGRESS]
-
-   - UPLOAD SERVICE AUTO SYNC MESSAGE -> AUTO VALIDATION -> USER CRUD SUBSCRIBER  [INPROGRESS]
-
-
-
-
-
- 2. PORT AND ADAPTER HEXAGONAL ARCHITECTURE [INPROGRESS]
-
-   - SUPPORT ENTITY CONCEPT(MODEL) [DONE], 
-
-   - SUPPORT VALIDATOR CONCEPT(INTERFACE/MODULAR CLASS) [DONE], 
-
-   - SUPPORT MANY REPOSITORY() [DONE]
-
-   - MODULAR GRAPHQL <-> JSON [INPROGRESS]
-
-
- ## SERVICE :
+## ==== PRODUCT SERVICE
 
 <details>
-  <summary>[CLICK] USER SERVICE - CHOREOGRAPHY PATTERN [DONE]</summary>
+  <summary>SYNC-USER-SERVICE-20220312-0001</summary>
 
-[ CLICK HERE ](/user-service/README.md)
+```bash
+
+1. install mongodb database
+
+2. create database ms_product_service
+
+3. nest new user-service
+
+4. npm install --save @nestjs/mongoose mongoose
+
+5. rubah .env 
+
+MONGODB_HOST=127.0.0.1
+MONGODB_PORT=7000
+MONGODB_USER=root
+MONGODB_PASSWORD=masuk123
+MONGODB_DATABASE=ms_product_service
+JWT_SECRET_KEY=eki-secret-key
+
+
+6. depedency list :
+
+npm i @nestjs/config
+
+npm uninstall @nestjs/platform-express
+npm i --save @nestjs/platform-fastify
+
+npm uninstall @nestjs/swagger swagger-ui-express
+npm install --save @nestjs/swagger fastify-swagger
+
+//======= optional
+nest g provider etc/validator/unique-validator
+nest g provider etc/validator/exist-validator
+//======= /optional
+
+npm i bcrypt
+npm i -D @types/bcrypt
+npm i class-validator class-transformer
+
+npm i @nestjs/passport
+npm i @nestjs/jwt
+npm i passport
+npm i passport-jwt
+npm i -D @types/passport-jwt
+
+//======= optional
+buat file pada src/auth/jwt.strategy.ts
+//======= /optional
+
+7. npm i
+all copy from USER SERVICE
+
+8. generate service & module
+nest g service /etc/service/rabbitmq-subscriber-product
+nest g module /etc/service/rabbitmq-subscriber-product
+
+9. generate product
+nest g res product
+
+10. 
+npm i @nestjs/typeorm typeorm  
+npm i pg
+
+11. rubah .env 
+
+MONGODB_HOST=127.0.0.1
+MONGODB_PORT=7000
+MONGODB_USER=root
+MONGODB_PASSWORD=masuk123
+MONGODB_DATABASE=ms_product_service
+
+POSTGRESQL_HOST=127.0.0.1
+POSTGRESQL_PORT=5400
+POSTGRESQL_USER=postgres
+POSTGRESQL_PASSWORD=masuk123
+POSTGRESQL_DATABASE=ms_product_service
+
+JWT_SECRET_KEY=eki-secret-key
+JWT_EXPIRES_IN=12h
+
+12. perlu bedain validator mongodb vs validator postgresql   
+
+
+nest g service /etc/service/page-mongodb
+copy source only src\etc\service\page (mongodb) -> /etc/service/page-mongodb
+delete src\etc\service\page
+
+nest g service /etc/service/page-postgresql
+copy source only src\etc\service\page (postgresql) -> /etc/service/page-postgresql
+
+
+update product-service\src\product\entities\product.entity.ts
+update product-service\src\product\dto\create-product.dto.ts
+
+exist-validator -> exist-mongodb-validator
+nest g provider etc/validator/exist-mongodb-validator
+
+unique-validator -> unique-mongodb-validator
+nest g provider etc/validator/unique-mongodb-validator
+
+nest g provider etc/validator/exist-postgresql-validator
+nest g provider etc/validator/unique-postgresql-validator
+
+update product-service\src\product\dto\create-product.dto.ts
+
+```
 
 </details>
 
 
-<details>
-  <summary>[CLICK] PRODUCT SERVICE - CHOREOGRAPHY PATTERN [INPROGRESS]</summary>
-
-[ CLICK HERE ](/product-service/README.md)
-
-</details>
-
-<details>
-  <summary>[CLICK] INVENTORY SERVICE - CHOREOGRAPHY PATTERN [INPROGRESS]</summary>
-
-[INPROGRESS]
-
-</details>
-
-<!-- 
-<details>
-  <summary>[CLICK] ORDER SERVICE - CHOREOGRAPHY PATTERN [INPROGRESS]</summary>
-
-[INPROGRESS]
-
-</details>
-
-
-<details>
-  <summary>[CLICK] NOTIFICATION SERVICE - CHOREOGRAPHY PATTERN [INPROGRESS]</summary>
-
-[INPROGRESS]
-
-</details>
-
-
-<details>
-  <summary>[CLICK] PAYMENT SERVICE - CHOREOGRAPHY PATTERN [INPROGRESS]</summary>
-
-[INPROGRESS]
-
-</details>
-
-
-<details>
-  <summary>[CLICK] PRINCIPAL SERVICE - CHOREOGRAPHY PATTERN [INPROGRESS]</summary>
-
-[INPROGRESS]
-
-</details>
-
-
-<details>
-  <summary>[CLICK] STORE SERVICE - CHOREOGRAPHY PATTERN [INPROGRESS]</summary>
-
-[INPROGRESS]
-
-</details>
-
--->
-
-
-<details>
-  <summary>[CLICK] UPLOAD SERVICE - CHOREOGRAPHY PATTERN [INPROGRESS]</summary>
-
-[INPROGRESS]
-
-</details>
-
-
+## ==== /PRODUCT SERVICE
 
  
 ## REFERENCE :
