@@ -73,17 +73,28 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 Nest is [MIT licensed](LICENSE).
 
 
-## 1. installation Docker, Mongodb
+## 1. installation Docker, Mongodb, Postgresql
 ```bash
 install vm alpine + docker
 https://github.com/EKI-INDRADI/eki-latihan-vm-alpine-docker-portable
 
-install Docker, Mongodb
+install Docker, Mongodb, Postgresql
 https://github.com/EKI-INDRADI/eki-latihan-docker-mongodb (mongodb 5.xx)
+
+
+docker exec -u 0 -it mongodb_container /bin/bash   (ubuntu)
+docker exec -u 0 -it mongodb_container /bin/sh   (alpine)
 
 mongosh admin -u 'root' -p 'masuk123'
 show dbs
 use ms_product_service
+
+install Docker, Postgresql
+https://github.com/EKI-INDRADI/eki-latihan-docker-postgresql (postgresql v13.5)
+
+docker exec -u 0 -it mongodb_container /bin/bash   (ubuntu)
+docker exec -u 0 -it mongodb_container /bin/sh   (alpine)
+
 ```
 
 ## 2. install nodejs & nestjs
@@ -105,7 +116,7 @@ nest --version
 
 ```bash
 
-1. install mongodb database
+1. install mongodb database & postgres database
 
 2. create database ms_product_service
 
@@ -207,6 +218,33 @@ nest g provider etc/validator/exist-postgresql-validator
 nest g provider etc/validator/unique-postgresql-validator
 
 update product-service\src\product\dto\create-product.dto.ts
+
+```
+
+</details>
+
+<details>
+  <summary>USER-PRODUCT-SERVICE-20220320-008-009-X-002</summary>
+
+```bash
+PRODUCT SERVICE : CRUD PAGE-VALIDATOR SYNC MICROSERVICE
+USER SERVICE : UPDATE CODE DTO & SERVICE
+
+nest g service etc/service/page-mongodb
+create manual src/etc/dto/page-mongodb-dto.ts
+
+nest g service etc/service/page-postgresql
+create manual src/etc/dto/page-postgresql-dto.ts
+
+update src\etc\service\page-postgresql\page-postgresql.service.ts
+update src\product\dto\create-product.dto.ts
+update src\product\product.controller.ts
+update src\product\product.module.ts
+update src\product\product.service.ts
+update src\user\dto\create-user.dto.ts
+update src\product\product.service.ts
+update src\app.module.ts
+update src\main.ts
 
 ```
 

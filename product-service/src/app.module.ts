@@ -40,6 +40,7 @@ import { UniquePostgresqlValidator } from './etc/validator/unique-postgresql-val
       entities: [
         Product
       ],
+      // entities: __dirname + '/entities/**/*.js',
       synchronize: true // entity yang dibuat tablenya akan otomatis di generate
     }),
     UserModule,

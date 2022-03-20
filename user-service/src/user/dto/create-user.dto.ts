@@ -11,6 +11,7 @@ export class UserDto {
     @IsOptional()
     // @IsExist([User.name, 'id'])
     @IsExistMongodb([User.name, 'id'])
+    // @IsUniqueMongodb([User.name, 'id'])
     id?: string
 
     @ApiProperty({ required: true, default: 'eki testing' })
@@ -51,7 +52,8 @@ export class UserDto {
 export class CreateUserDtoAutoSync {
     @ApiHideProperty()
     @IsOptional()
-    @IsExistMongodb([User.name, 'id'])
+    // @IsExistMongodb([User.name, 'id'])
+    @IsUniqueMongodb([User.name, 'id'])
     id?: string
 
     @ApiProperty({ required: true, default: 'eki testing' })

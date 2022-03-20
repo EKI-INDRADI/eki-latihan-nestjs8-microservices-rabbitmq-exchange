@@ -364,6 +364,18 @@ nest g provider etc/validator/exist-mongodb-validator
 unique-validator -> unique-mongodb-validator
 nest g provider etc/validator/unique-mongodb-validator
 
+nest g service etc/service/page-mongodb
+create manual src/etc/dto/page-mongodb-dto.ts
+
+</details>
+
+
+<details>
+  <summary>USER-SERVICE-20220320-0009-UPDATE-CODE</summary>
+
+update src\user\dto\create-user.dto.ts
+update src\user\user.service.ts
+
 </details>
 
 ## ==== /USER SERVICE

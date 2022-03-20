@@ -10,6 +10,7 @@ export class UserDto {
     @ApiProperty()
     @IsOptional()
     @IsExistMongodb([User.name, 'id'])
+    // @IsUniqueMongodb([User.name, 'id'])
     id?: string
 
     @ApiProperty({ required: true, default: 'eki testing' })
@@ -49,7 +50,7 @@ export class UserDto {
 export class CreateUserDtoAutoSync {
     @ApiHideProperty()
     @IsOptional()
-    @IsExistMongodb([User.name, 'id'])
+    @IsUniqueMongodb([User.name, 'id'])
     id?: string
 
     @ApiProperty({ required: true, default: 'eki testing' })
@@ -234,48 +235,48 @@ export class ResponGetUserCustomDto_WithPage extends PageMongodbResponseDto {
 }
 
 export class UserDtoRelation {
-    @ApiProperty()
+    @ApiHideProperty()
     @IsOptional()
     @IsExistMongodb([User.name, 'id'])
-    id?: number
+    id?: string
 
-    @ApiProperty()
+    @ApiProperty({ required: true, default: 'eki testing' })
     @IsString()
     @MaxLength(64)
     @MinLength(8)
     @IsNotEmpty()
     name: string
 
-    @ApiProperty()
+    @ApiProperty({ default: 'ekitesting@mail.com' })
     @IsEmail()
-    // @IsUnique([User.name, 'email'])
     @IsExistMongodb([User.name, 'email'])
     @MaxLength(32)
     @MinLength(6)
     @IsNotEmpty()
     email: string
 
-    @ApiProperty()
+    @ApiProperty({ default: 'ekitesting' })
     @IsString()
     @MaxLength(32)
     @MinLength(8)
     @IsNotEmpty()
-    // @IsUnique([User.name, 'username']) 
-    @IsExistMongodb([User.name, 'username'])
+    @IsExistMongodb([User.name, 'username']) 
     username: string
 
-    // @ApiProperty()
-    // @IsString()
-    // @MaxLength(32)
-    // @MinLength(8)
-    // @IsNotEmpty()
-    // password: string 
+    @ApiProperty({ default: 'masuk123' })
+    @IsString()
+    @MaxLength(32)
+    @MinLength(8)
+    @IsNotEmpty()
+    password: string
 
-    @ApiProperty()
+    @ApiHideProperty()
+    @IsOptional()
     @IsDate()
     created_at: Date
 
-    @ApiProperty()
+    @ApiHideProperty()
+    @IsOptional()
     @IsDate()
     updated_at: Date
 }

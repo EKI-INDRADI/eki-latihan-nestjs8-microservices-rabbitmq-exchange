@@ -5,6 +5,8 @@ import { AppModule } from './app.module';
 import { useContainer } from 'class-validator';
 import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
 
+
+
 async function bootstrap() {
 
   const app = await NestFactory.create<NestFastifyApplication>( // FASTIFY
@@ -69,5 +71,6 @@ async function bootstrap() {
   SwaggerModule.setup('api-docs', app, swaggerDocument, configCustomSwagger)
 
   await app.listen(3002, '0.0.0.0');
+
 }
 bootstrap();

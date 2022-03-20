@@ -1,5 +1,6 @@
-import { Column, Generated, PrimaryColumn } from "typeorm"
+import { Column, Entity, PrimaryColumn } from "typeorm"
 
+@Entity({ name: 'main_product' })
 export class Product {
     // @PrimaryGeneratedColumn()
     // https://stackoverflow.com/questions/69474337/error-creating-entity-with-nestjs-typeorm-and-postgresql
@@ -22,20 +23,23 @@ export class Product {
     price_purchase: number
 
     @Column()
-    price_selling: number
+    price_sale: number
 
     @Column()
     price_msrp: number
 
     @Column()
-    image_filename: string
+    price_net: number
+
+    @Column()
+    image_filename_ext: string
 
     // @CreateDateColumn()
-    @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP"})
+    @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
     created_at: Date
 
     // @UpdateDateColumn({ onUpdate: "CURRENT_TIMESTAMP(6)" }) 
-    @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP"})
+    @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
     updated_at: Date
 
     // @ManyToOne(() => User, data => data.id) // User dari entities
@@ -45,5 +49,5 @@ export class Product {
     // @ManyToOne(() => User, data => data.id) // User dari entities
 
     @Column()
-    user_obj_string: string // dari entities
+    user: string // dari entities
 }

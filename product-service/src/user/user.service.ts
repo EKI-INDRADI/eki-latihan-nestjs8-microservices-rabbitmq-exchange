@@ -111,7 +111,7 @@ export class UserService extends PageMongodbService {
       console.log(`Error sent message routing_key : ${set_product_service_routing_key}, \nevent : ${setEvent}, \nmodel_name : ${setModel}, \n${setModelMain} -> ${setModelSync}\n `)
 
       res_json.process_trace.push({
-        [`${set_user_service_routing_key}`]: "error"
+        [`${set_product_service_routing_key}`]: "error"
       })
     }
     //========================= /PRODUCT SERVICE

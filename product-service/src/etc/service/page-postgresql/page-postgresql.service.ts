@@ -8,7 +8,7 @@ export class PagePostgresqlService {
     // opt = untuk keperluan relations / join
     async generatePage(data, repo, opt: FindManyOptions = {}) {
 
-        let { page, limit, ...where } = data // pisahkan data
+        let { page, limit, ...where } = data
         if (where) {
             let filter = {}
             Object.keys(where).forEach(f => {
@@ -27,6 +27,8 @@ export class PagePostgresqlService {
             pages: pages,
             data: result
         }
+
+
         return finalData
 
     }
